@@ -12,6 +12,7 @@ class MoviesController < ApplicationController
 
     @movie = Movie.with_ratings(@ratings_to_show)
 
+    @title_header = ''
     if params.has_key?(:sort)
       @sort_by = params[:sort_by]
       @movie = @movie.order(@sort_by)
