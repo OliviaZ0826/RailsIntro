@@ -12,7 +12,7 @@ class MoviesController < ApplicationController
 
     @movies = Movie.with_ratings(@ratings_to_show)
     
-    @ratings_hash = @ratings_to_show.map( |ratings| [ratings, 1]).to_h
+    @ratings_hash = Hash[@ratings_to_show.map { |ratings| [ratings, 1]}]
     @sort_by = ''
     if params.has_key?(:sort_by)
       @sort_by = params[:sort_by]
