@@ -10,7 +10,7 @@ class Movie < ActiveRecord::Base
     if ratings_list.length() == 0
       Movie.all
     else
-      Movie.where(rating : ratings_list.map(&:upcase))
+      Movie.where(rating: ratings_list.map(&:upcase))
     end
   end
 
