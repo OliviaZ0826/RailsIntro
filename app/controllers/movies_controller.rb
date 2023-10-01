@@ -11,8 +11,11 @@ class MoviesController < ApplicationController
 
     if (!params.has_key?(:ratings) && session.key?(:ratings)) ||
       (!params.has_key?(:sort_by) && session.key?(:sort_by))
-      redirect_to movies_path(:sort_by => session[:sort_by], 
-        :ratings => Hash[session[:ratings].map { |ratings| [ratings, 1]}]) and return
+      @ratings_hash = Hash[session[:ratings].map { |ratings| [ratings, 1]}]
+      @sort_by = session[:sort_by]
+      session.clear
+      redirect_to movies_path(:sort_by => @sort_by, 
+        :ratings => @ratings_hash) and return
     end
 
     @ratings_to_show = params[:ratings]&.keys || []
