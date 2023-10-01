@@ -9,12 +9,9 @@ class MoviesController < ApplicationController
   def index
     @all_ratings = Movie.all_ratings
 
-    if (request.referrer).nil?
-      session.clear
-    end
-
-    if (!params.has_key?(:ratings) && !params.has_key?(:sort_by)) &&
-      (session.key?(:ratings) || session.key?(:sort_by))
+    if !(params.has_key(:commit) && params[:commit] == 'Refresh') &&
+       (!params.has_key?(:ratings) && !params.has_key?(:sort_by)) &&
+       (session.key?(:ratings) || session.key?(:sort_by))
       @ratings_hash = Hash[session[:ratings].map { |ratings| [ratings, 1]}]
       @sort_by = session[:sort_by]
       redirect_to movies_path(:sort_by => @sort_by, 
