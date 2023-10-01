@@ -9,6 +9,10 @@ class MoviesController < ApplicationController
   def index
     @all_ratings = Movie.all_ratings
 
+    if (request.referrer).nil?
+      session.clear
+    end
+
     if (!params.has_key?(:ratings) && !params.has_key?(:sort_by)) &&
       (session.key?(:ratings) || session.key?(:sort_by))
       @ratings_hash = Hash[session[:ratings].map { |ratings| [ratings, 1]}]
