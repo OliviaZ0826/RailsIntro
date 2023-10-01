@@ -9,9 +9,6 @@ class MoviesController < ApplicationController
   def index
     @all_ratings = Movie.all_ratings
 
-    if (request.referrer).nil?
-      session.clear
-    end
 
     if !(params.has_key?(:commit) && params[:commit] == 'Refresh') &&
        (!params.has_key?(:ratings) && !params.has_key?(:sort_by)) &&
@@ -22,7 +19,7 @@ class MoviesController < ApplicationController
         :ratings => @ratings_hash) and return
     end
 
-    @ratings_to_show = params[:ratings]&.keys || []
+    @ratings_to_show = params[:ratings]&.keys || @all_ratings
     @movies = Movie.with_ratings(@ratings_to_show)
     
     @ratings_hash = Hash[@ratings_to_show.map { |ratings| [ratings, 1]}]
